@@ -20,7 +20,8 @@ class EmployeeType(enum.Enum):
 
 class Provider(models.Model):
     name = models.CharField(max_length=250)
-
+    incomes = models.PositiveIntegerField(default=0)
+    expenses = models.PositiveIntegerField(default=0)
     objects = models.Manager()
 
     def __str__(self):

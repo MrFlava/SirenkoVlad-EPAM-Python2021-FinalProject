@@ -1,33 +1,48 @@
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.status import HTTP_400_BAD_REQUEST
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView, get_object_or_404
 from rest_framework.filters import SearchFilter, OrderingFilter
+from django.db import models
 
 from .serializers import ProvidersSerializer, EmployeeSerializer
 from .models import Provider, Employee
 
 
-class ProviderCreateView(CreateAPIView):
-    queryset = Provider.objects.all()
-    serializer_class = ProvidersSerializer
-    permission_classes = [IsAuthenticated]
+class ProviderView(APIView):
 
+    def get(self, request):
+        providers = Provider.objects.all()
+        average_income = Provider.objects.aggregate(models.Avg('incomes'))
+        average_expense = Provider.objects.aggregate(models.Avg('expenses'))
+        serializer = ProvidersSerializer(providers, many=True)
+        return Response({"average_incomes": average_income.get('incomes__avg'),
+                         "average_expenses": average_expense.get('expenses__avg'),
+                         "providers": serializer.data})
 
-class ProviderListView(ListAPIView):
-    queryset = Provider.objects.all()
-    serializer_class = ProvidersSerializer
-    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        provider = request.data
+        serializer = ProvidersSerializer(data=provider)
+        if serializer.is_valid(raise_exception=True):
+            provider_saved = serializer.save()
+            return Response({"success": f"Provider '{provider_saved.name}' created successfully"})
 
+    def patch(self, request, pk):
+        provider = get_object_or_404(Provider.objects.all(), pk=pk)
+        serializer = ProvidersSerializer(provider, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"success": f"Provider  with id `{pk}` changed successfully"})
 
-class ProviderUpdateView(UpdateAPIView):
-    queryset = Provider.objects.all()
-    serializer_class = ProvidersSerializer
-    permission_classes = [IsAuthenticated]
+        return Response(status=HTTP_400_BAD_REQUEST)
 
-
-class ProviderDeleteView(DestroyAPIView):
-    queryset = Provider.objects.all()
-    serializer_class = ProvidersSerializer
-    permission_classes = [IsAuthenticated]
+    def delete(self, request, pk):
+        article = get_object_or_404(Provider.objects.all(), pk=pk)
+        article.delete()
+        return Response({
+            "message": f"Provider with id `{pk}` has been deleted."
+        }, status=204)
 
 
 class EmployeeListView(ListAPIView):

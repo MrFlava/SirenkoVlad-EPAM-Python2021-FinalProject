@@ -27,13 +27,13 @@ class Provider(models.Model):
     def __str__(self):
         return f"Provider company ({self.name})"
 
-    @property
-    def average_incomes(self):
-        return Provider.objects.aggregate(models.Avg('incomes'))
-
-    @property
-    def average_expenses(self):
-        return Provider.objects.aggregate(models.Avg('expenses'))
+    # @property
+    # def average_incomes(self):
+    #     return Provider.objects.aggregate(models.Avg('incomes'))
+    #
+    # @property
+    # def average_expenses(self):
+    #     return Provider.objects.aggregate(models.Avg('expenses'))
 
 
 class Employee(models.Model):

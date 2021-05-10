@@ -1,13 +1,13 @@
-from rest_framework.permissions import IsAuthenticated
+from django.db import models
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.status import HTTP_400_BAD_REQUEST
-from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView, get_object_or_404
 from rest_framework.filters import SearchFilter, OrderingFilter
-from django.db import models
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView, get_object_or_404
 
-from .serializers import ProvidersSerializer, EmployeeSerializer
 from .models import Provider, Employee
+from .serializers import ProvidersSerializer, EmployeeSerializer
 
 
 class ProviderView(APIView):
@@ -37,7 +37,7 @@ class ProviderView(APIView):
 
         return Response(status=HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, pk):
+    def delte(self, request, pk):
         article = get_object_or_404(Provider.objects.all(), pk=pk)
         article.delete()
         return Response({

@@ -1,48 +1,74 @@
 from django.db import models
-from rest_framework.views import APIView
+from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.status import HTTP_400_BAD_REQUEST
 from rest_framework.filters import SearchFilter, OrderingFilter
-from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView, get_object_or_404
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 
 from .models import Provider, Employee
 from .serializers import ProvidersSerializer, EmployeeSerializer
 
 
-class ProviderView(APIView):
+class ProviderListView(ListAPIView):
+    queryset = Provider.objects.all()
+    serializer_class = ProvidersSerializer
+    permission_classes = [IsAuthenticated]
 
-    def get(self, request):
-        providers = Provider.objects.all()
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
         average_income = Provider.objects.aggregate(models.Avg('incomes'))
         average_expense = Provider.objects.aggregate(models.Avg('expenses'))
-        serializer = ProvidersSerializer(providers, many=True)
-        return Response({"average_incomes": average_income.get('incomes__avg'),
-                         "average_expenses": average_expense.get('expenses__avg'),
-                         "providers": serializer.data})
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
 
-    def post(self, request):
-        provider = request.data
-        serializer = ProvidersSerializer(data=provider)
-        if serializer.is_valid(raise_exception=True):
-            provider_saved = serializer.save()
-            return Response({"success": f"Provider '{provider_saved.name}' created successfully"})
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({'average_incomes': average_income.get('incomes__avg'),
+                         'average_expenses': average_expense.get('expenses__avg'),
+                         'providers': serializer.data})
 
-    def patch(self, request, pk):
-        provider = get_object_or_404(Provider.objects.all(), pk=pk)
-        serializer = ProvidersSerializer(provider, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"success": f"Provider  with id `{pk}` changed successfully"})
 
-        return Response(status=HTTP_400_BAD_REQUEST)
+class ProviderCreateView(CreateAPIView):
+    queryset = Provider.objects.all()
+    serializer_class = ProvidersSerializer
+    permission_classes = [IsAuthenticated]
 
-    def delte(self, request, pk):
-        article = get_object_or_404(Provider.objects.all(), pk=pk)
-        article.delete()
-        return Response({
-            "message": f"Provider with id `{pk}` has been deleted."
-        }, status=204)
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response({'new_provider': serializer.data}, status=status.HTTP_201_CREATED, headers=headers)
+
+
+class ProviderUpdateView(UpdateAPIView):
+    queryset = Provider.objects.all()
+    serializer_class = ProvidersSerializer
+    permission_classes = [IsAuthenticated]
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response({'changed_provider_data': serializer.data})
+
+
+class ProviderDeleteView(DestroyAPIView):
+    queryset = Provider.objects.all()
+    serializer_class = ProvidersSerializer
+    permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({'message': 'Provider has been deleted.'}, status=status.HTTP_204_NO_CONTENT)
 
 
 class EmployeeListView(ListAPIView):
@@ -52,11 +78,29 @@ class EmployeeListView(ListAPIView):
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['full_name', 'salary']
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response({"employees": serializer.data})
+
 
 class EmployeeCreateView(CreateAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response({'new_employee': serializer.data}, status=status.HTTP_201_CREATED, headers=headers)
 
 
 class EmployeeUpdateView(UpdateAPIView):
@@ -64,8 +108,26 @@ class EmployeeUpdateView(UpdateAPIView):
     serializer_class = EmployeeSerializer
     permission_classes = [IsAuthenticated]
 
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response({'changed_employee_data': serializer.data})
+
 
 class EmployeeDeleteView(DestroyAPIView):
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     permission_classes = [IsAuthenticated]
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return Response({'message': 'Employee has been deleted.'}, status=status.HTTP_204_NO_CONTENT)
+

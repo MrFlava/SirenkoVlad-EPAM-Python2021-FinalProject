@@ -1,0 +1,26 @@
+<html>
+  <body>
+
+  <h1>Employees</h1>
+
+
+  <ul>
+      {% for employee in employees %}
+      <li>
+        Name: {{ employee.full_name }}
+        <ul>
+            <li>
+              Employee type: {{ employee.type }}
+            </li>
+            <li>
+              Salary: {{ employee.salary }}
+            </li>
+            <li>
+              Provider company ID: {{ employee.provider_company }}
+            </li>
+        </ul>
+      </li>
+      {% endfor %}
+  </ul>
+  </body>
+</html>

@@ -2,7 +2,6 @@ from django.db import models
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 
@@ -14,8 +13,6 @@ class ProviderListView(ListAPIView):
     queryset = Provider.objects.all()
     serializer_class = ProvidersSerializer
     permission_classes = [IsAuthenticated]
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'providers_list.html'
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -80,8 +77,6 @@ class EmployeeListView(ListAPIView):
     permission_classes = [IsAuthenticated]
     filter_backends = [SearchFilter, OrderingFilter]
     search_fields = ['full_name', 'salary']
-    renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'employees_list.html'
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())

@@ -1,5 +1,3 @@
-import pdb
-
 from .test_setup import TestSetUp
 
 
@@ -19,5 +17,4 @@ class TestViews(TestSetUp):
     def test_user_can_login_correctly(self):
         self.client.post(self.register_url, self.user_data, format='json')
         res = self.client.post(self.login_url, self.user_data, format='json')
-        pdb.set_trace()
         self.assertEqual(res.status_code, 200)

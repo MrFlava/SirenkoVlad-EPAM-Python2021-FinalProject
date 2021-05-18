@@ -1,9 +1,22 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import ReactDOM from 'react-dom';
+
+import Header from './layout/Header';
+import DashBoard from './providers/DashBoard';
+
+import { Provider } from 'react-redux';
+import store from '../store';
 
 class App extends Component {
     render(){
-      return <h1>Hello world!</h1>
+      return (
+        <Provider store={store}>
+          <div className='container'>
+             <Header />
+             <DashBoard />
+           </div>
+        </Provider>
+      )
     }
 
 }

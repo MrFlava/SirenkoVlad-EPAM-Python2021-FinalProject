@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework.authtoken',
     'djoser',
+    'providers.apps.ProvidersConfig',
     'rest_framework',
-    'providers',
-    'frontend.apps.FrontendConfig'
+    'frontend'
 ]
 
 MIDDLEWARE = [
@@ -111,7 +111,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': (
         'django_filters.rest_framework.DjangoFilterBackend',
-    ),
+    )
 }
 
 

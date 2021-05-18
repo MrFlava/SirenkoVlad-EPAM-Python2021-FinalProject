@@ -24,6 +24,16 @@ class Provider(models.Model):
     expenses = models.PositiveIntegerField(default=0)
     objects = models.Manager()
 
+    @property
+    def average_incomes(self):
+        return Provider.objects.aggregate(models.Avg('incomes'))
+
+    @property
+    def average_expenses(self):
+        return Provider.objects.aggregate(models.Avg('expenses'))
+
+
+
     def __str__(self):
         return f"Provider company ({self.name})"
 

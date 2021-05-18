@@ -6,6 +6,9 @@ from providers.models import Provider, Employee
 
 class ProvidersSerializer(serializers.ModelSerializer):
 
+    average_income = serializers.DictField(source='average_incomes', read_only=True)
+    average_expense = serializers.DictField(source='average_expenses', read_only=True)
+
     class Meta:
         model = Provider
         fields = '__all__'

@@ -16,16 +16,16 @@ export const getProviders = () => dispatch => {
 };
 
 // //Delete provider
-// export const deleteTodo = (id) => dispatch => {
-//     axios.delete(`api/todo/${id}/`)
-//         .then(result => {
-//             dispatch({
-//                 type: DELETE_TODO,
-//                 payload: id
-//             });
-//         }).catch(error => console.log(error));
-// };
-//
+export const deleteProvider = (id) => dispatch => {
+    axios.delete(`api/providers/${id}/delete`)
+        .then(result => {
+            dispatch({
+                type: DELETE_PROVIDER,
+                payload: id
+            });
+        }).catch(error => console.log(error));
+};
+
 // //Toggle provider
 // export const toggleTodo = (todo) => dispatch => {
 //     todo.done = !todo.done;

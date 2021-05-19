@@ -2,7 +2,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { PropTypes } from 'prop-types';
-import { getProviders } from '../../actions/providers';
+import { getProviders, deleteProvider } from '../../actions/providers';
 
 
 
@@ -42,6 +42,9 @@ class List extends Component {
                                 <td>{provider.name}</td>
                                 <td>{provider.incomes}</td>
                                 <td>{provider.expenses}</td>
+                                <td><button
+                                onClick={this.props.deleteProvider.bind(this, provider.id)}
+                                className='btn btn-danger btn-sm'>Delete</button></td>
                             </tr>
                         ))}
                     </tbody>
@@ -56,4 +59,4 @@ const mapStateToProps = (state) => ({
     providers: state.providers.providers
 });
 
-export default connect(mapStateToProps, { getProviders })(List);
+export default connect(mapStateToProps, { getProviders, deleteProvider })(List);

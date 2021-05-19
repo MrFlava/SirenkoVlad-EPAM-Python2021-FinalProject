@@ -38,13 +38,13 @@ export const deleteProvider = (id) => dispatch => {
 //         }).catch(error => console.log(error));
 // };
 //
-// //Add provider
-// export const addTodo = (todo) => dispatch => {
-//     axios.post('api/todo/', todo)
-//         .then(result => {
-//             dispatch({
-//                 type: ADD_TODO,
-//                 payload: result.data
-//             });
-//         }).catch(error => console.log(error));
-// };
+//Add provider
+export const addProvider = (provider) => dispatch => {
+    axios.post('api/provders/create/', provider)
+        .then(result => {
+            dispatch({
+                type: ADD_PROVIDER,
+                payload: result.data
+            });
+        }).catch(error => console.log(error));
+};

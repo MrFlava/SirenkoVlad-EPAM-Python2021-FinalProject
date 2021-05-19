@@ -21,11 +21,11 @@ export default function (state = initialState, action) {
         //         ...state,
         //         todos: [...state.todos]
         //     };
-        // case ADD_TODO:
-        //     return {
-        //         ...state,
-        //         todos: [...state.todos, action.payload]
-        //     };
+        case ADD_PROVIDER:
+            return {
+                ...state,
+                providers: [...state.providers, action.payload]
+            };
         default:
             return state;
     }

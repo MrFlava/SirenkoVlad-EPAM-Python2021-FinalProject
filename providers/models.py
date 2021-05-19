@@ -32,8 +32,6 @@ class Provider(models.Model):
     def average_expenses(self):
         return Provider.objects.aggregate(models.Avg('expenses'))
 
-
-
     def __str__(self):
         return f"Provider company ({self.name})"
 

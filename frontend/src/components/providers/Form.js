@@ -41,7 +41,7 @@ class Form extends Component {
                         <input
                             type='text'
                             className='form-control'
-                            name='title'
+                            name='name'
                             onChange={this.onChange}
                             value={name} />
                     </div>
@@ -50,7 +50,7 @@ class Form extends Component {
                         <input
                             type='number'
                             className='form-control'
-                            name='description'
+                            name='incomes'
                             onChange={this.onChange}
                             value={incomes} />
                     </div>
@@ -59,7 +59,7 @@ class Form extends Component {
                         <input
                             type='number'
                             className='form-control'
-                            name='description'
+                            name='expenses'
                             onChange={this.onChange}
                             value={expenses} />
                     </div>

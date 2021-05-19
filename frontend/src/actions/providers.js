@@ -40,7 +40,7 @@ export const deleteProvider = (id) => dispatch => {
 //
 //Add provider
 export const addProvider = (provider) => dispatch => {
-    axios.post('api/provders/create/', provider)
+    axios.post('api/providers/create', provider)
         .then(result => {
             dispatch({
                 type: ADD_PROVIDER,

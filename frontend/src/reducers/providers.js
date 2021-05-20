@@ -16,11 +16,11 @@ export default function (state = initialState, action) {
                 ...state,
                 providers: state.providers.filter(provider => provider.id != action.payload)
             };
-        // case TOGGLE_TODO:
-        //     return {
-        //         ...state,
-        //         todos: [...state.todos]
-        //     };
+        case UPDATE_PROVIDER:
+            return {
+                ...state,
+                providers: [...state.providers]
+            };
         case ADD_PROVIDER:
             return {
                 ...state,

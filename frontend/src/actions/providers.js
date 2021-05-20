@@ -26,18 +26,20 @@ export const deleteProvider = (id) => dispatch => {
         }).catch(error => console.log(error));
 };
 
-// //Toggle provider
-// export const toggleTodo = (todo) => dispatch => {
-//     todo.done = !todo.done;
-//     axios.put(`api/todo/${todo.id}/`, todo)
-//         .then(result => {
-//             dispatch({
-//                 type: TOGGLE_TODO,
-//                 payload: result.data
-//             });
-//         }).catch(error => console.log(error));
-// };
-//
+//Update provider
+export const updateProvider = (provider) => dispatch => {
+    provider.name = !provider.name;
+    provider.incomes = !provider.incomes;
+    provider.expenses = !provider.expenses;
+    axios.patch(`api/providers/${provider.id}/update`, provider)
+        .then(result => {
+            dispatch({
+                type: UPDATE_PROVIDER,
+                payload: result.data
+            });
+        }).catch(error => console.log(error));
+};
+
 //Add provider
 export const addProvider = (provider) => dispatch => {
     axios.post('api/providers/create', provider)

@@ -34,6 +34,8 @@ class List extends Component {
                             <th>Name</th>
                             <th>Incomes</th>
                             <th>Expenses</th>
+                            <th>Actions</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -43,6 +45,9 @@ class List extends Component {
                                 <td>{provider.incomes}</td>
                                 <td>{provider.expenses}</td>
                                 <td><button
+                                className='btn btn-success btn-sm'>Update</button>
+                                <span> </span>
+                                <button
                                 onClick={this.props.deleteProvider.bind(this, provider.id)}
                                 className='btn btn-danger btn-sm'>Delete</button></td>
                             </tr>

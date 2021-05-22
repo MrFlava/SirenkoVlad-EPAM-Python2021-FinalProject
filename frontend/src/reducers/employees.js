@@ -1,20 +1,20 @@
-import {  GET_PROVIDERS_LIST, ADD_PROVIDER, DELETE_PROVIDER, GET_PROVIDER ,UPDATE_PROVIDER  } from '../actions/types';
+import { GET_EMPLOYEES_LIST, GET_EMPLOYEE, DELETE_EMPLOYEE, ADD_EMPLOYEE, UPDATE_EMPLOYEE } from '../actions/types';
 
 const initialState = {
-    providers: []
+    employees: []
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case GET_PROVIDERS_LIST:
+        case GET_EMPLOYEES_LIST:
             return {
                 ...state,
-                providers: action.payload
+                employees: action.payload
             };
-        case DELETE_PROVIDER:
+        case DELETE_EMPLOYEE:
             return {
                 ...state,
-                providers: state.providers.filter(provider => provider.id != action.payload)
+                employees: state.employees.filter(employee => employee.id != action.payload)
             };
         // case GET_PROVIDER:
         // case UPDATE_PROVIDER:
@@ -22,10 +22,10 @@ export default function (state = initialState, action) {
         //       ...state,
         //       [action.payload.id]: action.payload
         //     };
-        case ADD_PROVIDER:
+        case ADD_EMPLOYEE:
             return {
                 ...state,
-                providers: [...state.providers, action.payload]
+                employees: [...state.employees, action.payload]
             };
         default:
             return state;

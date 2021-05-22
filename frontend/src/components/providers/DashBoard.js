@@ -1,14 +1,18 @@
 import React, { Fragment } from 'react';
 
-import Form from './Form';
-import List from './List';
+import ProviderForm from './ProviderForm';
+import EmployeeForm from './EmployeeForm';
+import ProvidersList from './ProvidersList';
+import EmployeesList from './EmployeesList';
 
 export default function DashBoard() {
     return (
         <Fragment>
-            <List />
-            <Form />
-
+            <ProvidersList />
+            <ProviderForm />
+            <EmployeesList />
+            <EmployeeForm />
+            
         </Fragment>
     )
 }

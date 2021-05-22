@@ -6,10 +6,12 @@ import { getProviders, deleteProvider } from '../../actions/providers';
 
 
 
-class List extends Component {
+class ProvidersList extends Component {
 
     static propTypes = {
         providers: PropTypes.array.isRequired,
+        getProviders: PropTypes.func.isRequired,
+        deleteProvider: PropTypes.func.isRequired,
     };
 
     componentDidMount() {
@@ -41,7 +43,9 @@ class List extends Component {
                     <tbody>
                         {this.props.providers.map(provider => (
                             <tr key={provider.id}>
-                                <td>{provider.name}</td>
+                                <td>
+                                {provider.name}
+                                </td>
                                 <td>{provider.incomes}</td>
                                 <td>{provider.expenses}</td>
                                 <td><button
@@ -64,4 +68,4 @@ const mapStateToProps = (state) => ({
     providers: state.providers.providers
 });
 
-export default connect(mapStateToProps, { getProviders, deleteProvider })(List);
+export default connect(mapStateToProps, { getProviders, deleteProvider })(ProvidersList);

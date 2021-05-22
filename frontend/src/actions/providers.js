@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_PROVIDERS_LIST, ADD_PROVIDER, DELETE_PROVIDER, UPDATE_PROVIDER } from '../actions/types';
+import { GET_PROVIDERS_LIST, GET_PROVIDER, ADD_PROVIDER, DELETE_PROVIDER, UPDATE_PROVIDER } from '../actions/types';
 
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.xsrfCookieName = 'csrftoken';
@@ -15,7 +15,18 @@ export const getProviders = () => dispatch => {
         }).catch(error => console.log(error));
 };
 
-// //Delete provider
+// Get provider
+export const getProvider = id => async dispatch => {
+  axios.get(`/api/providers/${id}/retrieve`).then(
+    result => {
+        dispatch({
+          type: GET_PROVIDER,
+          payload: res.data
+        });
+    }).catch(error => console.log(error));
+};
+
+// Delete provider
 export const deleteProvider = (id) => dispatch => {
     axios.delete(`api/providers/${id}/delete`)
         .then(result => {
@@ -27,18 +38,16 @@ export const deleteProvider = (id) => dispatch => {
 };
 
 //Update provider
-export const updateProvider = (provider) => dispatch => {
-    provider.name = !provider.name;
-    provider.incomes = !provider.incomes;
-    provider.expenses = !provider.expenses;
-    axios.patch(`api/providers/${provider.id}/update`, provider)
-        .then(result => {
-            dispatch({
-                type: UPDATE_PROVIDER,
-                payload: result.data
-            });
-        }).catch(error => console.log(error));
-};
+// export const editProvider = (id, formValues) => dispatch => {
+//   axios.patch(`/api/providers/${id}/update`, formValues)
+//   .then(result => {
+//       dispatch({
+//         type: UPDATE_PROVIDER,
+//         payload: result.data
+//       });
+//     }).catch(error => console.log(error));
+//
+// };
 
 //Add provider
 export const addProvider = (provider) => dispatch => {

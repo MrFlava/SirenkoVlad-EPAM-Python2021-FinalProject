@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addProvider } from '../../actions/providers';
 
-class Form extends Component {
+class ProviderForm extends Component {
 
     state = {
         name: '',
@@ -72,4 +72,4 @@ class Form extends Component {
     }
 }
 
-export default connect(null, { addProvider })(Form);
+export default connect(null, { addProvider })(ProviderForm);

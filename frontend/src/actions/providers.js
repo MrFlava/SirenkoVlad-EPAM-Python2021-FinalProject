@@ -4,9 +4,11 @@ import { GET_PROVIDERS_LIST, GET_PROVIDER, ADD_PROVIDER, DELETE_PROVIDER, UPDATE
 axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
 axios.defaults.xsrfCookieName = 'csrftoken';
 
+import { tokenConfig } from './auth';
+
 // Get providers list
-export const getProviders = () => dispatch => {
-    axios.get('api/providers/')
+export const getProviders = () => (dispatch, getState) => {
+    return axios.get('api/providers/', tokenConfig(getState))
         .then(result => {
             dispatch({
                 type: GET_PROVIDERS_LIST,
@@ -16,19 +18,15 @@ export const getProviders = () => dispatch => {
 };
 
 // Get provider
-export const getProvider = id => async dispatch => {
-  axios.get(`/api/providers/${id}/retrieve`).then(
-    result => {
-        dispatch({
-          type: GET_PROVIDER,
-          payload: res.data
-        });
-    }).catch(error => console.log(error));
+export const getProvider = id => (dispatch, getState) => {
+    return axios.get(`/api/providers/${id}/retrieve`, tokenConfig(getState)).then(
+        ({ data }) => data
+      ).catch(error => console.log(error));
 };
 
 // Delete provider
-export const deleteProvider = (id) => dispatch => {
-    axios.delete(`api/providers/${id}/delete`)
+export const deleteProvider = (id) => (dispatch, getState) => {
+    axios.delete(`api/providers/${id}/delete`, tokenConfig(getState))
         .then(result => {
             dispatch({
                 type: DELETE_PROVIDER,
@@ -37,21 +35,22 @@ export const deleteProvider = (id) => dispatch => {
         }).catch(error => console.log(error));
 };
 
-//Update provider
-// export const editProvider = (id, formValues) => dispatch => {
-//   axios.patch(`/api/providers/${id}/update`, formValues)
-//   .then(result => {
-//       dispatch({
-//         type: UPDATE_PROVIDER,
-//         payload: result.data
-//       });
-//     }).catch(error => console.log(error));
-//
-// };
+// Update provider
+export const editProvider = (id, formValues) => (dispatch, getState) => {
+  console.log('HELLO');
+  axios.patch(`/api/providers/${id}/update`, formValues, tokenConfig(getState))
+  .then(result => {
+      dispatch({
+        type: UPDATE_PROVIDER,
+        payload: result.data
+      });
+    }).catch(error => console.log(error));
+
+};
 
 //Add provider
-export const addProvider = (provider) => dispatch => {
-    axios.post('api/providers/create', provider)
+export const addProvider = (provider) => (dispatch, getState) => {
+    axios.post('api/providers/create', provider, tokenConfig(getState))
         .then(result => {
             dispatch({
                 type: ADD_PROVIDER,

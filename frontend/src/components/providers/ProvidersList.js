@@ -15,6 +15,7 @@ class ProvidersList extends Component {
     };
 
     componentDidMount() {
+        console.log('HERERERER!!!!!!!!!');
         this.props.getProviders();
     };
 
@@ -33,6 +34,7 @@ class ProvidersList extends Component {
                 <table className='table table-striped'>
                     <thead>
                         <tr>
+                            <th># ID</th>
                             <th>Name</th>
                             <th>Incomes</th>
                             <th>Expenses</th>
@@ -42,14 +44,19 @@ class ProvidersList extends Component {
                     </thead>
                     <tbody>
                         {this.props.providers.map(provider => (
-                            <tr key={provider.id}>
-                                <td>
-                                {provider.name}
-                                </td>
+                            <tr key={`provider-row-${provider.id}`}>
+                                <td>{provider.id}</td>
+                                <td>{provider.name}</td>
                                 <td>{provider.incomes}</td>
                                 <td>{provider.expenses}</td>
-                                <td><button
-                                className='btn btn-success btn-sm'>Update</button>
+                                <td>
+                                  <a href={`#/providers/${provider.id}/edit`}>
+                                    <button
+                                      className='btn btn-success btn-sm'
+                                    >
+                                      Update
+                                    </button>
+                                  </a>
                                 <span> </span>
                                 <button
                                 onClick={this.props.deleteProvider.bind(this, provider.id)}

@@ -10,7 +10,7 @@ export const getProviders = () => dispatch => {
         .then(result => {
             dispatch({
                 type: GET_PROVIDERS_LIST,
-                payload: result.data
+                payload: result.data.sort((a, b) => a.id - b.id)
             });
         }).catch(error => console.log(error));
 };

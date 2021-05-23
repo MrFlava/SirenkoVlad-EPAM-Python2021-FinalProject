@@ -1,50 +1,84 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { addEmployee } from '../../actions/employees';
+import { addEmployee, getEmployee, editEmployee } from '../../actions/employees';
+
+
+const defaultState = {
+    full_name: '',
+    employee_type: '',
+    salary: 0,
+    provider_company: 0,
+    date_of_birth: Date.now(),
+    isEditing: false,
+};
+
 
 
 class EmployeeForm extends Component {
 
-    state = {
-        full_name: '',
-        employee_type: '',
-        salary: 0,
-        provider_company: 0,
-        date_of_birth: Date.now()
-    };
+
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        ...defaultState,
+        isEditing: this.props.match.path.indexOf('edit') >= 0,
+      }
+
+      this.onSubmit = this.onSubmit.bind(this);
+    }
 
     static propTypes = {
-        addEmployee: PropTypes.func.isRequired
+        addEmployee: PropTypes.func.isRequired,
+        getEmployee: PropTypes.func.isRequired,
+        editEmployee: PropTypes.func.isRequired,
     };
 
     onSubmit = (e) => {
         e.preventDefault();
-        const { full_name, employee_type, salary, provider_company, date_of_birth } = this.state;
+
+        const { full_name, employee_type, salary, provider_company, date_of_birth, isEditing } = this.state;
+
         const employee = { full_name, employee_type, salary, provider_company, date_of_birth };
-        this.props.addEmployee(employee);
-        this.setState({
-          full_name: '',
-          employee_type: '',
-          salary: 0,
-          provider_company: 0,
-          date_of_birth: Date.now()
-        });
+        console.log(employee);
+        if (isEditing) {
+          this.props.editEmployee(this.props.match.params.employeeId, employee);
+          this.props.history.push('/');
+
+        } else {
+          this.props.addEmployee(employee);
+          this.props.history.push('/');
+        }
+
     };
+
+    componentDidMount() {
+      if (this.state.isEditing) {
+        this.props.getEmployee(this.props.match.params.employeeId).then(
+          (employee) => {
+          this.setState({
+            ...employee,
+          })
+        });
+      }
+    }
+
 
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-    handleChange(event) {
-      this.setState({value: event.target.value});
-    }
+
 
     render() {
         const { full_name, employee_type, salary,
-           provider_company, date_of_birth } = this.state;
+           provider_company, date_of_birth, isEditing } = this.state;
+        const employeeId = this.props.match.params.employeeId;
+
 
         return (
             <div className='card card-body mt-4 mb-4'>
-                <h2>Add employee</h2>
+                <h2>{isEditing ? 'Edit Employee' : 'Add Employee'}</h2>
                 <form onSubmit={this.onSubmit}>
                     <div className='form-group'>
                         <label>Full name</label>
@@ -92,7 +126,14 @@ class EmployeeForm extends Component {
                             value={date_of_birth} />
                     </div>
                     <div className='form-group'>
-                        <button type='submit' className='btn btn-primary'>Add</button>
+                        <button type='submit' className='btn btn-primary'>
+                            {isEditing ? 'Update' : 'Add'}
+                        </button>
+                        {isEditing && (
+                          <a href='#/'>
+                            <button className='btn btn-primary'>Cancel</button>
+                          </a>
+                        )}
                     </div>
                 </form>
             </div>
@@ -100,4 +141,4 @@ class EmployeeForm extends Component {
     }
 }
 
-export default connect(null, { addEmployee })(EmployeeForm);
+export default connect(null, { addEmployee, getEmployee, editEmployee })(EmployeeForm);

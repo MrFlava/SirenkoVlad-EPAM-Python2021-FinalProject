@@ -1,15 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addProvider } from '../../actions/providers';
+import { addProvider, getProvider, editProvider } from '../../actions/providers';
+
+const defaultState = {
+    name: '',
+    incomes: 0,
+    expenses: 0,
+    isEditing: false,
+};
 
 class ProviderForm extends Component {
 
-    state = {
-        name: '',
-        incomes: 0,
-        expenses: 0,
-    };
+    constructor(props) {
+      super(props);
+
+      this.state = {
+        ...defaultState,
+        isEditing: this.props.match.path.indexOf('edit') >= 0,
+      }
+
+      this.onSubmit = this.onSubmit.bind(this);
+    }
 
     static propTypes = {
         addProvider: PropTypes.func.isRequired
@@ -17,24 +29,43 @@ class ProviderForm extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        const { name, incomes, expenses } = this.state;
+
+        const { name, incomes, expenses, isEditing } = this.state;
+
+
         const provider = { name, incomes, expenses };
-        this.props.addProvider(provider);
-        this.setState({
-          name: '',
-          incomes: 0,
-          incomes: 0,
-        });
+        console.log(provider);
+        if (isEditing) {
+          this.props.editProvider(this.props.match.params.providerId, provider);
+          this.props.history.push('/');
+
+        } else {
+          this.props.addProvider(provider);
+          this.props.history.push('/');
+        }
     };
+
+    componentDidMount() {
+      if (this.state.isEditing) {
+        this.props.getProvider(this.props.match.params.providerId).then(({ name, incomes, expenses }) => {
+          this.setState({
+            name,
+            incomes,
+            expenses,
+          })
+        });
+      }
+    }
 
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
     render() {
-        const { name, incomes, expenses } = this.state;
+        const { name, incomes, expenses, isEditing } = this.state;
+        const providerId = this.props.match.params.providerId;
 
         return (
             <div className='card card-body mt-4 mb-4'>
-                <h2>Add provider</h2>
+                <h2>{isEditing ? 'Edit Provider' : 'Add Provider'}</h2>
                 <form onSubmit={this.onSubmit}>
                     <div className='form-group'>
                         <label>Name</label>
@@ -64,7 +95,14 @@ class ProviderForm extends Component {
                             value={expenses} />
                     </div>
                     <div className='form-group'>
-                        <button type='submit' className='btn btn-primary'>Add</button>
+                        <button type='submit' className='btn btn-primary'>
+                            {isEditing ? 'Update' : 'Add'}
+                        </button>
+                        {isEditing && (
+                          <a href='#/'>
+                            <button className='btn btn-primary'>Cancel</button>
+                          </a>
+                        )}
                     </div>
                 </form>
             </div>
@@ -72,4 +110,4 @@ class ProviderForm extends Component {
     }
 }
 
-export default connect(null, { addProvider })(ProviderForm);
+export default connect(null, { addProvider, getProvider, editProvider })(ProviderForm);

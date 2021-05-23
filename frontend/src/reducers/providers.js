@@ -16,12 +16,12 @@ export default function (state = initialState, action) {
                 ...state,
                 providers: state.providers.filter(provider => provider.id != action.payload)
             };
-        // case GET_PROVIDER:
-        // case UPDATE_PROVIDER:
-        //     return {
-        //       ...state,
-        //       [action.payload.id]: action.payload
-        //     };
+        case GET_PROVIDER:
+        case UPDATE_PROVIDER:
+            return {
+              ...state,
+              [action.payload.id]: action.payload
+            };
         case ADD_PROVIDER:
             return {
                 ...state,

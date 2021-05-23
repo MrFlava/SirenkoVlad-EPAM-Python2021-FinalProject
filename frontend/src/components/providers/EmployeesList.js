@@ -31,6 +31,7 @@ class EmployeesList extends Component {
                 <table className='table table-striped'>
                     <thead>
                         <tr>
+                            <th># ID</th>
                             <th>Full name</th>
                             <th>Employee type</th>
                             <th>Salary</th>
@@ -42,7 +43,8 @@ class EmployeesList extends Component {
                     </thead>
                     <tbody>
                         {this.props.employees.map(employee => (
-                            <tr key={employee.id}>
+                            <tr key={`employee-row-${employee.id}`}>
+                                <td>{employee.id}</td>
                                 <td>
                                 {employee.full_name}
                                 </td>
@@ -58,8 +60,12 @@ class EmployeesList extends Component {
                                 <td>
                                 {employee.date_of_birth}
                                 </td>
-                                <td><button
-                                className='btn btn-success btn-sm'>Update</button>
+                                <td>
+                                <a href={`#/employees/${employee.id}/edit`}>
+                                  <button className='btn btn-success btn-sm'>
+                                    Update
+                                  </button>
+                                </a>
                                 <span> </span>
                                 <button
                                 onClick={this.props.deleteEmployee.bind(this, employee.id)}

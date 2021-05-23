@@ -8,7 +8,7 @@ class EmployeeForm extends Component {
 
     state = {
         full_name: '',
-        employee_type: 'TECH_SUPPORT',
+        employee_type: '',
         salary: 0,
         provider_company: 0,
         date_of_birth: Date.now()
@@ -25,7 +25,7 @@ class EmployeeForm extends Component {
         this.props.addEmployee(employee);
         this.setState({
           full_name: '',
-          employee_type: 'TECH_SUPPORT',
+          employee_type: '',
           salary: 0,
           provider_company: 0,
           date_of_birth: Date.now()
@@ -33,6 +33,10 @@ class EmployeeForm extends Component {
     };
 
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+
+    handleChange(event) {
+      this.setState({value: event.target.value});
+    }
 
     render() {
         const { full_name, employee_type, salary,
@@ -59,6 +63,15 @@ class EmployeeForm extends Component {
                             name='salary'
                             onChange={this.onChange}
                             value={salary} />
+                    </div>
+                    <div className='form-group'>
+                        <label>Employee type</label>
+                        <select  name='employee_type' className='form-control' value={employee_type} onChange={this.onChange}>
+                          <option value="TECH_SUPPORT">Tech support</option>
+                          <option value="JUNIOR_NETWORK_ENGINEER">Junior network engineer</option>
+                          <option value="MIDDLE_NETWORK_ENGINEER">Middle network engineer</option>
+                          <option value="SENIOR_NETWORK_ENGINEER">Senior network engineer</option>
+                        </select>
                     </div>
                     <div className='form-group'>
                         <label>Provider company ID </label>

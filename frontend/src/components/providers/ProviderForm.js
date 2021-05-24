@@ -35,7 +35,7 @@ class ProviderForm extends Component {
 
 
         const provider = { name, incomes, expenses };
-        console.log(provider);
+
         if (isEditing) {
           this.props.editProvider(this.props.match.params.providerId, provider);
           this.props.history.push('/');

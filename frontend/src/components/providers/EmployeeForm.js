@@ -42,7 +42,6 @@ class EmployeeForm extends Component {
         const { full_name, employee_type, salary, provider_company, date_of_birth, isEditing } = this.state;
 
         const employee = { full_name, employee_type, salary, provider_company, date_of_birth };
-        console.log(employee);
         if (isEditing) {
           this.props.editEmployee(this.props.match.params.employeeId, employee);
           this.props.history.push('/');

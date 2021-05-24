@@ -15,7 +15,6 @@ class ProvidersList extends Component {
     };
 
     componentDidMount() {
-        console.log('HERERERER!!!!!!!!!');
         this.props.getProviders();
     };
 

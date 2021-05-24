@@ -14,7 +14,6 @@ import {
 
 export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
-  console.log('LOADING USER');
 
   return axios.get('auth/users/me')
     .then(({ data }) => {
@@ -100,9 +99,7 @@ export const logout = () => (dispatch, getState) => {
 export const tokenConfig = getState => {
   // Get token
   const token = getState().auth.auth_token;
-  console.log(getState());
-  console.log('HERE');
-  console.log(token);
+
 
   // Headers
   const config = {

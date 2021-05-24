@@ -9,9 +9,17 @@ export default function DashBoard() {
     return (
         <Fragment>
             <ProvidersList />
-            <a href='#/providers/new'>Create Provider</a>
+            <a href='#/providers/new'>
+              <button className='btn btn-primary'>
+              Create Provider
+              </button>
+            </a>
             <EmployeesList />
-            <a href='#/employees/new'>Create Employee</a>
+            <a href='#/employees/new'>
+              <button className='btn btn-primary'>
+               Create Employee
+              </button>
+            </a>
         </Fragment>
     )
 }

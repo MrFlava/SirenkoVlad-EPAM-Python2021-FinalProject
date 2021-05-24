@@ -104,6 +104,8 @@ class EmployeeForm extends Component {
                           <option value="JUNIOR_NETWORK_ENGINEER">Junior network engineer</option>
                           <option value="MIDDLE_NETWORK_ENGINEER">Middle network engineer</option>
                           <option value="SENIOR_NETWORK_ENGINEER">Senior network engineer</option>
+                          <option value="SYSTEM_ADMINISTRATOR">System administrator</option>
+                          <option value="MAIN_SYSTEM_ADMINISTRATOR">Main administrator</option>
                         </select>
                     </div>
                     <div className='form-group'>
@@ -128,6 +130,7 @@ class EmployeeForm extends Component {
                         <button type='submit' className='btn btn-primary'>
                             {isEditing ? 'Update' : 'Add'}
                         </button>
+                        <span> </span>
                         {isEditing && (
                           <a href='#/'>
                             <button className='btn btn-primary'>Cancel</button>

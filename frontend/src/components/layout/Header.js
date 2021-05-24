@@ -8,40 +8,63 @@ class Header extends Component {
     const { user, isAuthenticated } = this.props.auth;
 
     const userLinks = (
-      <div className='right menu'>
-        <div className='ui simple dropdown item'>
+      <li className='navbar-item'>
+        <div>
           {user ? user.username : ''}
-          <i className='dropdown icon' />
-          <div className='menu'>
-            <a onClick={this.props.logout} className='item'>
+
+          <div className='navbar-item'>
+            <a onClick={this.props.logout} className='nav-link'>
               Logout
             </a>
           </div>
         </div>
-      </div>
+      </li>
     );
 
     const guestLinks = (
-      <div className='right menu'>
-        <Link to='/register' className='item'>
+      <ul className="navbar-nav me-auto">
+        <li>
+        <Link to='/register' className='navbar-item nav-link'>
           Sign Up
         </Link>
-        <Link to='/login' className='item'>
+        </li>
+        <li>
+        <Link to='/login' className='navbar-item nav-link'>
           Login
         </Link>
-      </div>
+        </li>
+      </ul>
+
     );
 
     return (
-      <div className='ui inverted menu' style={{ borderRadius: '0' }}>
-        <Link to='/' className='header item'>
-          ProvidersApp
-        </Link>
-        <Link to='/' className='item'>
-          Home
-        </Link>
-        {isAuthenticated ? userLinks : guestLinks}
-      </div>
+
+      <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div className="container-fluid">
+          <Link to='/' className="navbar-brand">
+            <p>ProvidersApp</p>
+          </Link>
+          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span className="navbar-toggler-icon"></span>
+          </button>
+
+          <div className="collapse navbar-collapse" id="navbarColor01">
+            <ul className="navbar-nav me-auto">
+              <li className="nav-item">
+                <Link to='/' className="nav-link">
+                  <p>Home</p>
+                </Link>
+              </li>
+              {isAuthenticated ? userLinks : guestLinks}
+            </ul>
+
+          </div>
+
+        </div>
+      </nav>
+
+
+
     );
   }
 }

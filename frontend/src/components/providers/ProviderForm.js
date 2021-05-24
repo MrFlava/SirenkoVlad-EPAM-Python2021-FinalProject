@@ -99,6 +99,7 @@ class ProviderForm extends Component {
                         <button type='submit' className='btn btn-primary'>
                             {isEditing ? 'Update' : 'Add'}
                         </button>
+                        <span> </span>
                         {isEditing && (
                           <a href='#/'>
                             <button className='btn btn-primary'>Cancel</button>

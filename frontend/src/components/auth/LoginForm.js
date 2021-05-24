@@ -35,34 +35,54 @@ class LoginForm extends Component {
       return <Redirect to='/' />;
     }
     return (
-      <div className='ui container'>
-        <div className='ui segment'>
-          <form
-            onSubmit={this.props.handleSubmit(this.onSubmit)}
-            className='ui form'
-          >
-            <Field
-              name='username'
-              type='text'
-              component={this.renderField}
-              label='Username'
-            />
-            <Field
-              name='password'
-              type='password'
-              component={this.renderField}
-              label='Password'
-            />
-            <Field
-              name='non_field_errors'
-              type='hidden'
-              component={this.hiddenField}
-            />
-            <button className='ui primary button'>Login</button>
-          </form>
-          <p style={{ marginTop: '1rem' }}>
-            Don't have an account? <Link to='/register'>Register</Link>
-          </p>
+      <div className='container'>
+        <div className='row justify-content-center'>
+          <div className='col-md-8'>
+            <div style={{ marginTop: '1rem' }} className='card'>
+             <div class="card-header">
+               <h4 className="card-title mb-4 mt-1">Login</h4>
+             </div>
+             <div class="card-body">
+              <form
+                onSubmit={this.props.handleSubmit(this.onSubmit)}
+              >
+                <div className="form-group">
+                <Field
+                  name='username'
+                  type='text'
+                  component={this.renderField}
+                  label='Username:'
+                  className="form-control"
+                />
+                </div>
+                <div className="form-group">
+                <Field
+                  name='password'
+                  type='password'
+                  component={this.renderField}
+                  label='Password:'
+                  className="form-control"
+                />
+                </div>
+                <div className="form-group">
+                <Field
+                  name='non_field_errors'
+                  type='hidden'
+                  component={this.hiddenField}
+                />
+                </div>
+                <div className="form-group">
+                <button className='btn btn-primary btn-lg'>Login</button>
+                </div>
+              </form>
+              </div>
+            </div>
+            <div className='col-md-4'>
+              <p style={{ marginTop: '1rem' }}>
+                Don't have an account? <Link to='/register'>Register</Link>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     );

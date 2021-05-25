@@ -4,6 +4,22 @@ from django.db import models
 
 # Create your models here.
 
+""""
+Here we are creating database models 
+First model is Provider contains the next fields:
+    name - the name of the provider company;
+    incomes - incomes of the provider company;
+    expenses - expenses of the provider company.
+
+    
+Second model is Employee contains the next fields:
+    full_name - full name of the employee;
+    employee_type - the position held by the employee;
+    salary - employee salary;
+    provider_company - relationship with the provider company where an employee works;
+    date_of_birth - the date when the employee was born.
+"""
+
 
 class EmployeeType(enum.Enum):
     MAIN_SYSTEM_ADMINISTRATOR = 'Main administrator'
@@ -12,6 +28,13 @@ class EmployeeType(enum.Enum):
     MIDDLE_NETWORK_ENGINEER = 'Middle network engineer'
     JUNIOR_NETWORK_ENGINEER = 'Junior network engineer'
     TECH_SUPPORT = 'Tech support'
+
+    """
+    Enum is a class in python for creating enumerations,
+    which are a set of symbolic names (members) bound to unique, constant values.
+    Here was created EmployeeType which contains the unique employee positions and also created @classmethod choices
+    for the creating tuple of employee types.
+    """
 
     @classmethod
     def choices(cls):
@@ -23,6 +46,11 @@ class Provider(models.Model):
     incomes = models.PositiveIntegerField(default=0)
     expenses = models.PositiveIntegerField(default=0)
     objects = models.Manager()
+
+    """
+    Here were created @property for calculating
+     average incomes and average expenses
+    """
 
     @property
     def average_incomes(self):

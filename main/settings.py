@@ -8,6 +8,8 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
+
+all the private settings (such as SECRET_KEY and DATABASES) are hidden in local_settings.py
 """
 from pathlib import Path
 
@@ -147,6 +149,11 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+""""
+All the private settings (such as SECRET_KEY and DATABASES) are hidden in local_settings.py.
+This part of the code imports all settings from local_settings.py.
+"""
 
 try:
     from .local_settings import *

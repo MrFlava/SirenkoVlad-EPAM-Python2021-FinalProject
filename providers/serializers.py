@@ -1,7 +1,14 @@
 from rest_framework import serializers
 
-
 from providers.models import Provider, Employee
+
+"""
+    Serializer: Converts information stored in the database
+    and defined using Django models in a format that is easily
+    and efficiently passed through the API. 
+    
+    In this file was created ProvidersSerializer and EmployeeSerializer.
+"""
 
 
 class ProvidersSerializer(serializers.ModelSerializer):

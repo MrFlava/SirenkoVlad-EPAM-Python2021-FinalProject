@@ -5,6 +5,15 @@ from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, D
 from .models import Provider, Employee
 from .serializers import ProvidersSerializer, EmployeeSerializer
 
+"""
+ View (ViewSet): defines the functions
+ (read, create, update, delete) that are available through the API. 
+ 
+ All of these views are protected by the permission_classes. 
+ If the user doesn't authenticate he will not be able to use these views.
+   
+"""
+
 
 class ProviderListView(ListAPIView):
     queryset = Provider.objects.all()

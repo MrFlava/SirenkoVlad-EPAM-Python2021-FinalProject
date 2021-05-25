@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'djoser',
     'providers.apps.ProvidersConfig',
     'rest_framework',
-    'frontend'
+    'frontend',
+    'drf_api_logger',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'drf_api_logger.middleware.api_logger_middleware.APILoggerMiddleware',
 ]
 
 ROOT_URLCONF = 'main.urls'
@@ -149,6 +151,8 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DRF_API_LOGGER_DATABASE = True
 
 """"
 All the private settings (such as SECRET_KEY and DATABASES) are hidden in local_settings.py.

@@ -1,17 +1,17 @@
-#Hello!
+# Hello!
 
-###This is the simple CRUD application for a Provider company. It contains a Back-End, and a Font-End parts.
+### This is the simple CRUD application for a Provider company. It contains a Back-End, and a Font-End parts.
 
-#Stack of technologies
+# Stack of technologies
 ### The Back-End part was developed with Django REST Framework and PostgreSQL for a database.
 ### The Front-End part was developed with React and Redux.
 
-#Task description: 
+# Task description: 
 Display a list of providers and the average income and expenses (calculated automatically) for these providers
 Display a list of employees in providers with the salary for each employee, and a search field for finding employees, with a specific salary or by name
 change (add / edit / delete) the above data .
 
-#API Endpoints:
+# API Endpoints:
     1. Providers
         1. [GET] providers/  - To view all providers
         2. [POST] providers/create  - To create a new provider
@@ -24,7 +24,7 @@ change (add / edit / delete) the above data .
         4. [DELETE] employees/<int:pk>/delete  - To delete an employee
     
 
-#Installing and testing on a local machine:
+# Installing and testing on a local machine:
 
     1. Clone the repository with git clone.
     2.Create maun/local_settings.pyand write the DB settings and token.

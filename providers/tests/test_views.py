@@ -53,8 +53,9 @@ class TestViews(TestSetUp):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + login.data['auth_token'])
         new_provider = self.client.post(self.providers_create_url, self.provider_data, format='json')
         self.assertEqual(new_provider.status_code, 201)
-        res = self.client.patch(reverse('update-provider', kwargs={'pk': new_provider.data.get('new_provider')['id']}),
+        res = self.client.patch(reverse('update-provider', kwargs={'pk': new_provider.data.get('id')}),
                                 self.provider_update_name_data, format='json')
+
         self.assertEqual(res.status_code, 200)
 
     def test_user_can_delete_provider(self):
@@ -65,7 +66,7 @@ class TestViews(TestSetUp):
         new_provider = self.client.post(self.providers_create_url, self.provider_data, format='json')
         self.assertEqual(new_provider.status_code, 201)
         res = self.client.delete(
-            reverse('delete-provider', kwargs={'pk': new_provider.data.get('new_provider')['id']}), format='json')
+            reverse('delete-provider', kwargs={'pk': new_provider.data.get('id')}), format='json')
         self.assertEqual(res.status_code, 204)
 
     def test_user_cannot_get_employees_with_no_auth(self):
@@ -90,7 +91,7 @@ class TestViews(TestSetUp):
         new_employee_data = {'full_name': 'NewEmployee',
                              'employee_type': 'MAIN_SYSTEM_ADMINISTRATOR',
                              'salary': 10000,
-                             'provider_company': new_provider.data.get('new_provider')['id']}
+                             'provider_company': new_provider.data.get('id')}
         res = self.client.post(self.employees_create_url, new_employee_data, format='json')
         self.assertEqual(res.status_code, 201)
 
@@ -104,9 +105,9 @@ class TestViews(TestSetUp):
         new_employee_data = {'full_name': 'NewEmployee',
                              'employee_type': 'MAIN_SYSTEM_ADMINISTRATOR',
                              'salary': 10000,
-                             'provider_company': new_provider.data.get('new_provider')['id']}
+                             'provider_company': new_provider.data.get('id')}
         new_employee = self.client.post(self.employees_create_url, new_employee_data, format='json')
-        res = self.client.patch(reverse('update-employee', kwargs={'pk': new_employee.data.get('new_employee')['id']}),
+        res = self.client.patch(reverse('update-employee', kwargs={'pk': new_employee.data.get('id')}),
                                 self.employee_update_name_data, format='json')
         self.assertEqual(res.status_code, 200)
 
@@ -120,8 +121,8 @@ class TestViews(TestSetUp):
         new_employee_data = {'full_name': 'NewEmployee',
                              'employee_type': 'MAIN_SYSTEM_ADMINISTRATOR',
                              'salary': 10000,
-                             'provider_company': new_provider.data.get('new_provider')['id']}
+                             'provider_company': new_provider.data.get('id')}
         new_employee = self.client.post(self.employees_create_url, new_employee_data, format='json')
         res = self.client.delete(
-            reverse('delete-employee', kwargs={'pk': new_employee.data.get('new_employee')['id']}), format='json')
+            reverse('delete-employee', kwargs={'pk': new_employee.data.get('id')}), format='json')
         self.assertEqual(res.status_code, 204)

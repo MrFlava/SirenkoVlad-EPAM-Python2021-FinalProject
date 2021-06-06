@@ -35,6 +35,6 @@ change (add / edit / delete) the above data .
 
 # Links:
 
-    1. Deployed REST-API: https://desolate-basin-92919.herokuapp.com/
-    2. Deployed Front-End part :
-    3. Front-End repo
+1. Deployed REST-API: https://desolate-basin-92919.herokuapp.com/
+2. Deployed Front-End part :
+3. Front-End repo

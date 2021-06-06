@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-tk%mqiq8vctfmy5hqkssgb45xk8mt!29ed)2b!(e4gbq#yjmn!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', '0.0.0.0:5000']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', 'desolate-basin-92919.herokuapp.com', '0.0.0.0:5000']
 
 
 # Application definition

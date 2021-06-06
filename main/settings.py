@@ -42,8 +42,8 @@ INSTALLED_APPS = [
     'djoser',
     'providers.apps.ProvidersConfig',
     'rest_framework',
-    'frontend',
     'drf_api_logger',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'drf_api_logger.middleware.api_logger_middleware.APILoggerMiddleware',
 ]
 

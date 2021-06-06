@@ -21,12 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = 'django-insecure-tk%mqiq8vctfmy5hqkssgb45xk8mt!29ed)2b!(e4gbq#yjmn!'
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', '0.0.0.0:5000']
 
 
 # Application definition
@@ -84,8 +85,13 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        "NAME": "providers",
+        "USER": "postgres",
+        "PASSWORD": "112323",
+        "HOST": "localhost",
+        "PORT": "5432",
+
     }
 }
 
@@ -154,6 +160,12 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 DRF_API_LOGGER_DATABASE = True
+
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:9000",
+    "http://127.0.0.1:9000"
+]
 
 """"
 All the private settings (such as SECRET_KEY and DATABASES) are hidden in local_settings.py.
